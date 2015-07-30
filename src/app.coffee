@@ -6,10 +6,8 @@ require('./app.less')
 u = require('./utils')
 
 app = angular.module('app', [
-  'ngCookies'
   'ngRoute'
   'ngAnimate'
-  'ngSanitize'
 ])
 
 app.run ($rootScope)->
@@ -40,7 +38,7 @@ datesIndex = (dates)->
     res[beginingOfDay(d).getTime()] = true
   res
 
-app.factory 'Data', ()->
+app.factory 'Data', ($http)->
   freeDays: (from, to)->
     success: (cb)->
       data = for i in [0..10]
