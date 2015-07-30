@@ -1,0 +1,36 @@
+.fs-calendar(data-ng-switch='selectionMode')
+  div(data-ng-switch-when='year')
+    .fs-calendar-header
+      span.fs-calendar-prev(data-ng-click='prevYearRange()')
+      span.fs-calendar-title(data-ng-click='switchSelectionMode()')
+        | {{ years[0] }}-{{ years[years.length-1] }}
+      span.fs-calendar-next(data-ng-click='nextYearRange()')
+    table.table-condensed
+      tr(data-ng-repeat='yearGroup in yearGroups')
+        td.year(data-ng-repeat='year in yearGroup', data-ng-click='selectYear(year)', data-ng-class="{'active': year == selectedYear}")
+          | {{ year }}
+  div(data-ng-switch-when='month')
+    .fs-calendar-header
+      span.fs-calendar-prev(data-ng-click='prevYear()')
+      span.fs-calendar-title(data-ng-click='switchSelectionMode()')
+        | {{ selectedYear }}
+      span.fs-calendar-next(data-ng-click='nextYear()')
+    table.table-condensed
+      tr(data-ng-repeat='monthGroup in monthGroups')
+        td.month(data-ng-repeat='month in monthGroup', data-ng-click='selectMonth(month)', data-ng-class="{'active': month == selectedMonth && isSameYear()}")
+          | {{ month }}
+  div(data-ng-switch-default='')
+    .fs-calendar-header
+      span.fs-calendar-prev(data-ng-click='prevMonth()')
+      span.fs-calendar-title(data-ng-click='switchSelectionMode()') {{ selectedMonth + &apos;, &apos; + selectedYear }}
+      span.fs-calendar-next(data-ng-click='nextMonth()')
+    table.table-condensed
+      thead
+        tr
+          th(data-ng-repeat='weekDay in weekDays') {{ weekDay }}
+      tbody
+        tr(data-ng-repeat='week in weeks')
+          td.day(data-ng-repeat='day in week', data-ng-class="{'day-in-selected-month': isDayInSelectedMonth(day),\
+          'day-current': isCurrentDate(day),\
+          'active bg-info': isSelectedDate(day)}", data-ng-click='selectDay(day)')
+            | {{ day.getDate() }}

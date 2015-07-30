@@ -1,3 +1,93 @@
 body {
     background: white;
 }
+.fs-date {
+  .fsc-wrapper {
+    position: relative;
+
+    .dropdown-menu {
+      padding: 5px;
+    }
+  }
+}
+
+.fs-calendar {
+  user-select: none;
+  display: inline-block;
+  min-width: 30em;
+
+  .fsc-header {
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 18em;
+  }
+
+  .fsc-next, .fsc-prev, .fsc-title {
+    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .fsc-title {
+    font-size: 1.5em;
+    width: 10em;
+  }
+
+  .fsc-prev:before {
+    content: '\025C0';
+  }
+
+  .fsc-next:after {
+    content: '\025B6';
+  }
+
+  .month, .day, .year {
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .day {
+    color: darkgray;
+    width: 2.5em;
+  }
+
+  .month, .year {
+    font-size: 1.5em;
+    width: 3.1em;
+  }
+
+  .day-in-selected-month {
+    color: black;
+  }
+
+  .day-current {
+    font-weight: bold;
+  }
+  .day-busy {
+    color: darkgray;
+    cursor: not-allowed;
+  }
+
+  .day.active, .month.active, .year.active {
+    font-weight: bold;
+    /* background-color: lightgray; */
+  }
+}
+
+.fs-calendar {
+    .table-condensed>tbody>tr>td {
+        padding: 10px;
+    }
+}
+.item {
+    padding: 5px;
+    border-top: 1px solid #ddd;
+    cursor: pointer;
+    &.active {
+      background: #d9edf7;
+    }
+    &:hover {
+        background: #eee;
+    }
+}

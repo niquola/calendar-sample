@@ -1,0 +1,55 @@
+.fs-calendar(ng-switch='selectionMode')
+  div(ng-switch-when='year')
+    .fsc-header
+      span.fsc-prev(ng-click='prevYearRange()')
+      span.fsc-title(ng-click='switchSelectionMode()')
+        | {{ years[0] }}-{{ years[years.length-1] }}
+      span.fsc-next(ng-click='nextYearRange()')
+    table.table-condensed
+      tr(ng-repeat='yearGroup in yearGroups')
+        td.year(ng-repeat='year in yearGroup', ng-click='selectYear(year)', ng-class="{'active': year == selectedYear}")
+          | {{ year }}
+  div(ng-switch-when='month')
+    .fsc-header
+      span.fsc-prev(ng-click='prevYear()')
+      span.fsc-title(ng-click='switchSelectionMode()')
+        | {{ selectedYear }}
+      span.fsc-next(ng-click='nextYear()')
+    table.table-condensed
+      tr(ng-repeat='monthGroup in monthGroups')
+        td.month(ng-repeat='month in monthGroup', ng-click='selectMonth(month)', ng-class="{'active': month == selectedMonth && isSameYear()}")
+          | {{ month }}
+  div(ng-switch-default='day')
+    .fsc-header
+      span.fsc-prev(ng-click='prevMonth()')
+      span.fsc-title(ng-click='switchSelectionMode()')
+        | {{ selectedMonth + &apos;, &apos; + selectedYear }}
+      span.fsc-next(ng-click='nextMonth()')
+    table.table-condensed
+      thead
+        tr: th(ng-repeat='weekDay in weekDays') {{ weekDay }}
+      tbody
+        tr(ng-repeat='week in weeks')
+          td.day(ng-repeat='day in week', class="{{classForDay(day)}}" 
+          ng-click='selectDay(day)')
+            | {{ day.getDate() }}
+  div(ng-switch-when='time')
+    h3 
+      a.btn.btn-default.btn-sm(ng-click="unselectDay()") cancel
+      | &nbsp; {{selectedDate | date}}
+    div.item(ng-repeat="tm in times" ng-click="selectTimeSlot(tm)" ng-class="{active: tm==selectedTimeSlot}")
+        | {{tm | date:'HH:mm'}}
+  div(ng-switch-when='form')
+    h3 
+      | &nbsp; Make Appointment
+    div.well: b {{selectedDate | date}} {{selectedTimeSlot | date:'HH:mm'}}
+    form.form(ng-if="selectedTimeSlot" ng-submit="makeAppointment()")
+      .form-group
+      .form-group: #[label Your Phone]
+        input.form-control(type='text', ng-model='appoint.phone')
+      .form-group: #[label Complaint]
+        textarea.form-control(type='text', ng-model='appoint.description')
+      .form-group.newrow
+        button.btn.btn-success(type='submit') Reserve
+        | &nbsp;
+        a.btn.btn-default(ng-click="unselectDay()") cancel

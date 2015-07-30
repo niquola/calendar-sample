@@ -36,5 +36,5 @@ html(ng-app='app')
               a(href='?') ???
     .container
       .alert.flash(class="{{flash.type}}" ng-show="flash") {{flash.message}}
-    #view(ng-view='')
+    #view.container(ng-view='')
     #footer
